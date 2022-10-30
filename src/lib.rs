@@ -45,7 +45,7 @@ impl DiscordWebhook {
             return Ok(());
         }
 
-        Err(anyhow!("You must set the hook url via .set_url"))
+        Err(anyhow!("You must set the hook url via ::new"))
     }
 
     pub async fn send_raw(&self, data: &WebhookMessage) -> Result<()> {
@@ -60,6 +60,6 @@ impl DiscordWebhook {
             return Ok(());
         }
 
-        Err(anyhow!("You must set the hook url via .set_url"))
+        Err(anyhow!("You must set the hook url via ::new"))
     }
 }
