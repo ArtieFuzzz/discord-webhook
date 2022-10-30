@@ -24,6 +24,18 @@ impl DiscordWebhook {
         }
     }
 
+    /// Send text to the Discord Webhook
+    ///
+    /// ```rs
+    /// use discord_webhook::DiscordWebhook;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///   let url = var("DISCORD_HOOK").unwrap();
+    ///   let hook = DiscordWebhook::new(url);
+    ///   hook.send_text("Hello World!").await.unwrap();
+    /// }
+    /// ```
     pub async fn send_text(&self, message: &str) -> Result<()> {
         // Make sending messages somewhat shorter
         if let Some(url) = &self.hook_url {
@@ -48,6 +60,22 @@ impl DiscordWebhook {
         Err(anyhow!("You must set the hook url via ::new"))
     }
 
+    /// Send a custom message to the Discord Webhook
+    ///
+    /// ```rs
+    /// use discord_webhook::DiscordWebhook;
+    ///
+    /// let message = WebhookMessage {
+    ///   content: Some("Hello World!".to_owned()),
+    ///   username: Some("This changed".to_owned()),
+    ///   embed: None,
+    ///   avatar_url: None,
+    ///   allowed_mentions: None,
+    ///   avatar_url
+    /// };
+    /// 
+    /// hook.send_raw(&message).await.unwrap();
+    /// ```
     pub async fn send_raw(&self, data: &WebhookMessage) -> Result<()> {
         if let Some(url) = &self.hook_url {
             let body = stringify_struct(&data)?;
